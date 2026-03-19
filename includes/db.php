@@ -1,4 +1,5 @@
 <?php
+//Database connection configuration
 
 $dsn = "mysql:host=localhost;dbname=website";
 $dbusername = "root";

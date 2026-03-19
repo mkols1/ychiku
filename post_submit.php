@@ -1,9 +1,9 @@
 <?php
-
-if($_SESSION['admin'] === false) {
-        header("location: ./index.php");
+//submits posts
+if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
+    header("location: ./index.php");
         exit();
-    }
+}
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {

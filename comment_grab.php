@@ -1,4 +1,5 @@
 <?php
+//function to get comments by post ID
     
     function getCommentsByPostID($post_id) {
         require 'includes/db.php';
