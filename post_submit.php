@@ -1,9 +1,12 @@
 <?php
 //submits posts
+
+require_once 'includes/db.php';
+require_once 'includes/config.php';
 if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
     header("location: ./index.php");
         exit();
-}
+    }
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
