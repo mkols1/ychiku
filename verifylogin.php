@@ -1,7 +1,7 @@
 <?php
 
 /*
-This verifies the admin login
+This verifies the admin login pwd
 */
     require_once 'includes/db.php';
     require_once 'includes/config.php';
