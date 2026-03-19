@@ -49,12 +49,11 @@
     //display all posts for admin to edit or delete
     foreach($results_posts as $row) {
                 //display each post content
-                echo "<p>" . 
-                    "<form action='editor.php' method='post'>" . 
-                    "<input type='hidden' name='post_id' value='" . htmlspecialchars($row["id"]) . "'>" .
+                echo "<p>
+                    <form action='editor.php' method='post'>
+                    <input type='hidden' name='post_id' value='" . htmlspecialchars($row["id"]) . "'>" .
                     "<button type='submit'>Edit</button>" . " " .
-                    htmlspecialchars($row["title"]) . " " .
-                    htmlspecialchars($row["created_time"]) . 
+                    htmlspecialchars($row["title"]) . " " . htmlspecialchars($row["created_time"]) . 
                     "</p></form>";
 
                 
