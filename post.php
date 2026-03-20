@@ -2,7 +2,7 @@
 //Admin panel
     require_once 'includes/db.php';
     require_once 'includes/config.php';
-    require_once 'comment_grab.php';
+    require_once 'script/comment_grab.php';
 
     if(!isset($_SESSION['admin']) || $_SESSION['admin'] === false) {
         header("location: ./index.php");
@@ -34,7 +34,7 @@
     <form action="index.php">
         <button type="submit">Back to Home</button>
     </form>
-    <form action="post_submit.php" method="post">
+    <form action="script/post_submit.php" method="post">
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" required>
 
@@ -54,8 +54,10 @@
                     <input type='hidden' name='post_id' value='" . htmlspecialchars($row["id"]) . "'>" .
                     "<button type='submit'>Edit</button>" . " " .
                     htmlspecialchars($row["title"]) . " " . htmlspecialchars($row["created_time"]) . 
-                    "</p></form>";
-
+                    "</form>";
+                echo "<form action='script/post_delete.php' method='post'>" .
+                    "<input type='hidden' name='post_id' value='" . htmlspecialchars($row["id"]) . "'>" .
+                    "<button type='submit'>Delete</button>" . "</form></p>";
                 
                 //echo "<br>";
 
@@ -66,7 +68,8 @@
                     echo "";
                 } else {
                     foreach($results_comments as $comment) {
-                        echo "<p>" . "<form action='post.php' method='post'>" . 
+                        echo "<p>" . "<form action='script/comment_delete.php' method='post'>" . 
+                            "<input type='hidden' name='comment_id' value='" . htmlspecialchars($comment["id"]) . "'>" .
                     "<button type='submit'>Delete</button>" . " " .
                             htmlspecialchars($comment["name"]) . ": " 
                             . htmlspecialchars($comment["content"]) . "</p></form>";

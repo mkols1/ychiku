@@ -40,7 +40,8 @@ This file is for editing posts behind the admin panel.
 
 
 
-    <form action="post_submit.php" method="post">
+    <form action="script/post_update.php" method="post">
+        <input type="hidden" name="post_id" value="<?php echo $results_posts['id']; ?>">
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" required <?php echo "value=" ."'$results_posts[title]'"; ?>>
         <br>

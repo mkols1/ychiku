@@ -3,16 +3,20 @@
 /*
 This verifies the admin login pwd
 */
-    require_once 'includes/db.php';
-    require_once 'includes/config.php';
+    require_once __DIR__ . "/../includes/db.php";
+    require_once __DIR__ . "/../includes/config.php";
     
     sleep(1);
 
-    if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
-        header("location: ./index.php");
+    
+    
+    if(isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
+        header("location: ../post.php");
         exit();
-    } else if(isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
-        header("location: ./post.php");
+    }
+    
+    if($_SERVER["REQUEST_METHOD"] !== "POST" && (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true)){
+        header("location: ../index.php");
         exit();
     }
     
@@ -26,14 +30,16 @@ This verifies the admin login pwd
 
     if($results && password_verify($pwd, $results["hashed"])) {
         $_SESSION['admin'] = true;
-        header("location: ./post.php");
+        header("location: ../post.php");
         exit();
     } else {
-        header("location: ./index.php");
+        header("location: ../index.php");
         exit();
     }
     
     }
-    header("location: ./index.php");
+
+
+    header("location: ../index.php");
     exit();
     

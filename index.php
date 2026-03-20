@@ -1,7 +1,7 @@
 <?php
     require_once 'includes/db.php';
     require_once 'includes/config.php';
-    require_once 'comment_grab.php';
+    require_once 'script/comment_grab.php';
 
     $query = "SELECT * FROM posts";
     $stmt = $pdo->prepare($query);
@@ -29,7 +29,7 @@
 
 <body>
 
-    <form action="verifylogin.php" method="post">
+    <form action="script/verifylogin.php" method="post">
         Post: 
         <?php
             if(isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
@@ -66,7 +66,7 @@
                 }
 
                 //input box for comments
-                echo "<form action='comment_submit.php' method='post'>
+                echo "<form action='script/comment_submit.php' method='post'>
                     <input type='hidden' name='post_id' value='" . htmlspecialchars($row["id"]) . "'>
                     <input type='text' name='name' placeholder='Name'>
                     <br>

@@ -1,10 +1,10 @@
 <?php
 //submits posts
 
-require_once 'includes/db.php';
-require_once 'includes/config.php';
+require_once __DIR__ . "/../includes/db.php";
+require_once __DIR__ . "/../includes/config.php";
 if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
-    header("location: ./index.php");
+    header("location: ../index.php");
         exit();
     }
 
@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     
 
     try{
-        require_once "includes/db.php";
+        require_once __DIR__ . "/../includes/db.php";
 
         $query = "INSERT INTO posts (title, content) VALUES (?, ?);";
         $stmt = $pdo->prepare($query);
@@ -23,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdo = null;
         $stmt = null;
 
-        header("location: ./index.php");
+        header("location: ../index.php");
 
         die(); //die if it has a connection
 
@@ -31,6 +31,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Query failed: " . $e->getMessage());
     }
 } else {
-    header("location: ./index.php");
+    header("location: ../index.php");
     exit();
 }
