@@ -1,6 +1,7 @@
 <?php
 /*
 This file is for editing posts behind the admin panel.
+//maybe obsolete now
 */
 
     require_once 'includes/db.php';
