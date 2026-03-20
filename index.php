@@ -1,18 +1,20 @@
 <?php
-    require_once 'includes/db.php';
-    require_once 'includes/config.php';
-    require_once 'script/comment_grab.php';
+require_once 'includes/db.php';
+require_once 'includes/config.php';
+require_once 'script/comment_grab.php';
 
-    $query = "SELECT * FROM posts";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute();
-    $results_posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$query = "SELECT * FROM posts";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+$results_posts = array_reverse($stmt->fetchAll(PDO::FETCH_ASSOC));
 
-    $results_posts = array_reverse($results_posts);
+$pdo = null;
+$stmt = null;
 
-    $pdo = null;
-    $stmt = null;
+// SET YOUR BACKGROUND IMAGE HERE
+$bgImage = "images/background.jpg"; // change this path
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,24 +24,20 @@
 
 <style>
     :root {
-        --bg: #f5f5f5;
-        --text: #111;
-        --card: #fff;
-        --border: #ccc;
-    }
-
-    body.dark {
         --bg: #121212;
         --text: #eee;
-        --card: #1e1e1e;
-        --border: #333;
+        --card: rgba(30,30,30,0.75); /* transparent */
+        --border: rgba(255,255,255,0.1);
     }
 
     body {
         margin: 0;
         font-family: Arial, sans-serif;
-        background: var(--bg);
         color: var(--text);
+
+        /* BACKGROUND IMAGE */
+        background: url("<?= $bgImage ?>") no-repeat center center fixed;
+        background-size: cover;
     }
 
     .layout {
@@ -53,12 +51,13 @@
 
     .sidebar {
         background: var(--card);
+        backdrop-filter: blur(10px);
         padding: 15px;
         border-radius: 10px;
         height: fit-content;
         position: sticky;
         top: 20px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        border: 1px solid var(--border);
     }
 
     .main {
@@ -67,28 +66,44 @@
     }
 
     .post {
-        background: var(--card);
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
+    background: var(--card);
+    backdrop-filter: blur(10px);
+    padding: 24px;              /* slightly more overall space */
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+}
+
+/* title spacing */
+.post h3 {
+    margin-bottom: 16px;
+}
+
+/* date spacing */
+.meta {
+    font-size: 0.85em;
+    color: #aaa;
+    margin-bottom: 16px;
+}
+
+/* main content spacing */
+.post p {
+    line-height: 1.7;
+    padding: 8px 0;            /* THIS adds vertical padding */
+    margin-bottom: 16px;
+}
 
     .meta {
         font-size: 0.85em;
-        color: #888;
+        color: #aaa;
         margin-bottom: 10px;
     }
 
     .comment {
-        background: rgba(0,0,0,0.05);
+        background: rgba(255,255,255,0.05);
         padding: 10px;
         border-radius: 6px;
         margin-top: 10px;
-    }
-
-    body.dark .comment {
-        background: rgba(255,255,255,0.05);
     }
 
     input, textarea {
@@ -97,7 +112,7 @@
         margin-top: 5px;
         border-radius: 5px;
         border: 1px solid var(--border);
-        background: transparent;
+        background: rgba(0,0,0,0.4);
         color: var(--text);
         box-sizing: border-box;
     }
@@ -106,19 +121,14 @@
         margin-top: 8px;
         padding: 8px 12px;
         border: none;
-        background: #333;
+        background: #222;
         color: white;
         border-radius: 5px;
         cursor: pointer;
     }
 
     button:hover {
-        background: #555;
-    }
-
-    .toggle {
-        width: 100%;
-        margin-bottom: 10px;
+        background: #444;
     }
 
     @media (max-width: 900px) {
@@ -138,8 +148,6 @@
 
     <!-- LEFT SIDEBAR -->
     <div class="sidebar">
-        <button class="toggle" onclick="toggleDark()">Toggle Dark Mode</button>
-
         <h3>Left Sidebar</h3>
         <p>Add anything here:</p>
         <ul>
@@ -213,18 +221,6 @@
     </div>
 
 </div>
-
-<script>
-function toggleDark() {
-    document.body.classList.toggle("dark");
-    localStorage.setItem("darkMode", document.body.classList.contains("dark"));
-}
-
-// load preference
-if(localStorage.getItem("darkMode") === "true") {
-    document.body.classList.add("dark");
-}
-</script>
 
 </body>
 </html>
